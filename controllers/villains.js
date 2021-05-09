@@ -1,9 +1,13 @@
 const models = require('../models')
 
-const getAllVillains = async (request, response) => {
+const getAllVillains = async (req, res) => {
   const villains = await models.villains.findAll({ attributes: ['name', 'movie', 'slug'] })
 
-  return response.send(villains)
+  return res.send(villains)
 }
 
-module.exports = { getAllVillains }
+const getVillainsBySlug = async (req, res) => {
+
+}
+
+module.exports = { getAllVillains, getVillainsBySlug }
