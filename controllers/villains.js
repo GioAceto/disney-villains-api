@@ -7,7 +7,12 @@ const getAllVillains = async (req, res) => {
 }
 
 const getVillainsBySlug = async (req, res) => {
+  const { slug } = req.params
 
+  const result = await models.villains.findOne({ where: { slug }, attributes: ['name', 'movie', 'slug'] })
+
+  return result
+    ? res.send(result) : res.sendStatus(404)
 }
 
 module.exports = { getAllVillains, getVillainsBySlug }
