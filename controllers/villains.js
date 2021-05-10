@@ -15,4 +15,8 @@ const getVillainsBySlug = async (req, res) => {
     ? res.send(result) : res.sendStatus(404)
 }
 
-module.exports = { getAllVillains, getVillainsBySlug }
+const addNewVillain = () => {
+
+}
+
+module.exports = { getAllVillains, getVillainsBySlug, addNewVillain }
