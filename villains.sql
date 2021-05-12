@@ -1,7 +1,9 @@
+DROP DATABASE disneyVillains;
 CREATE DATABASE disneyVillains;
+USE disneyVillains;
+DROP USER IF EXISTS 'villains' @'localhost';
 CREATE USER 'villains' @'localhost' IDENTIFIED WITH mysql_native_password BY 'passwordvillains123';
 GRANT ALL ON disneyVillains.* TO 'villains' @'localhost';
-USE disneyVillains;
 CREATE TABLE villains (
   id INT auto_increment,
   name VARCHAR(255),
