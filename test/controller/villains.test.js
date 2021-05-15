@@ -4,7 +4,7 @@ const sinonChai = require('sinon-chai')
 const { describe, it } = require('mocha')
 const { getAllVillains, getVillainsBySlug, addNewVillain } = require('../../controllers/villains')
 const models = require('../../models')
-const { singleTeam, postedTeam, teamsList } = require('../mocks/teams')
+const { singleVillain, postedVillain, villainsList } = require('../mocks/villains')
 
 chai.use(sinonChai)
 const { expect } = chai
