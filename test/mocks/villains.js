@@ -4,5 +4,10 @@ const singleVillain = {
   slug: 'captain-hook'
 }
 
+const postedVillain = {
+  name: 'Kaa',
+  movie: 'The Jungle Book',
+  slug: 'kaa',
+}
 
-module.exports = { singleVillain }
+module.exports = { singleVillain, postedVillain }
