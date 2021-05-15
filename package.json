@@ -4,10 +4,10 @@
   "description": "In this two part exercise you are tasked with create a REST API for accessing Disney Villain data, complete with test suite.",
   "main": ".eslintrc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --format codeframe .",
-    "lint:fix": "eslint --fix --format codeframe .",
-    "dev": "nodemon index.js"
+    "test": "./node_modules/.bin/mocha test/**/*.test.js",
+    "dev": "./node_modules/.bin/nodemon index.js",
+    "lint": "./node_modules/.bin/eslint --format codeframe .",
+    "lint:fix": "./node_modules/.bin/eslint --format codeframe --fix ."
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,12 @@
   },
   "homepage": "https://github.com/GioAceto/disney-villains-api#readme",
   "devDependencies": {
+    "chai": "^4.3.4",
     "eslint": "^7.26.0",
-    "nodemon": "^2.0.7"
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.7",
+    "sinon": "^10.0.0",
+    "sinon-chai": "^3.6.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
