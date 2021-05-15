@@ -8,3 +8,17 @@ const { singleVillain, postedVillain, villainsList } = require('../mocks/villain
 
 chai.use(sinonChai)
 const { expect } = chai
+
+describe('Controllers - Villains', () => {
+  describe('getAllVillains', () => {
+    it('retrieves a list of villains from the database and calls response.send() with the list', async () => {
+      const stubbedFindAll = sinon.stub(models.villains, 'findAll').returns(villainsList)
+      const stubbedSend = sinon.stub()
+      const response = { send: stubbedSend }
+      await getAllVillains({}, response)
+
+      expect(stubbedFindAll).to.have.callCount(1)
+      expect(stubbedSend).to.have.been.calledWith(villainsList)
+    })
+  })
+})
