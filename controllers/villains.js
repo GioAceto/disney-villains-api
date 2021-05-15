@@ -7,12 +7,16 @@ const getAllVillains = async (req, res) => {
 }
 
 const getVillainsBySlug = async (req, res) => {
-  const { slug } = req.params
+  try {
+    const { slug } = req.params
 
-  const result = await models.villains.findOne({ where: { slug }, attributes: ['name', 'movie', 'slug'] })
+    const result = await models.villains.findOne({ where: { slug }, attributes: ['name', 'movie', 'slug'] })
 
-  return result
-    ? res.send(result) : res.sendStatus(404)
+    return result
+      ? res.send(result) : res.sendStatus(404)
+  } catch (error) {
+    return res.status(500).send('Try again')
+  }
 }
 
 const addNewVillain = async (req, res) => {
