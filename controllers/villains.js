@@ -1,9 +1,13 @@
 const models = require('../models')
 
 const getAllVillains = async (req, res) => {
-  const villains = await models.villains.findAll({ attributes: ['name', 'movie', 'slug'] })
+  try {
+    const villains = await models.villains.findAll({ attributes: ['name', 'movie', 'slug'] })
 
-  return res.send(villains)
+    return res.send(villains)
+  } catch (error) {
+    return res.status(500).send('HTTP Error 500 unable to handle this request')
+  }
 }
 
 const getVillainsBySlug = async (req, res) => {
@@ -15,7 +19,7 @@ const getVillainsBySlug = async (req, res) => {
     return result
       ? res.send(result) : res.sendStatus(404)
   } catch (error) {
-    return res.status(500).send('Try again')
+    return res.status(500).send('HTTP Error 500 unable to handle this request')
   }
 }
 
