@@ -28,7 +28,7 @@ const addNewVillain = async (req, res) => {
 
   const newVillain = await models.villains.create({ name, movie, slug })
 
-  return res.send(newVillain)
+  return res.status(201).send(newVillain)
 }
 
 module.exports = { getAllVillains, getVillainsBySlug, addNewVillain }

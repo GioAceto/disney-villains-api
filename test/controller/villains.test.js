@@ -42,18 +42,35 @@ describe('Controllers - Villains', () => {
 
       await getVillainsBySlug(req, res)
 
-      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
+      expect(stubbedFindOne).to.have.been.calledWith({
+        where: {
+          slug: 'captain-hook'
+        },
+        attributes: ['name', 'movie', 'slug']
+      })
       expect(stubbedSend).to.have.been.calledWith(singleVillain)
     })
     it('returns a 404 status when no matching id is found', async () => {
       stubbedFindOne.returns(null)
-      const req = { params: { where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] } }
+      const req = {
+        params: {
+          where: {
+            slug: 'captain-hook'
+          },
+          attributes: ['name', 'movie', 'slug']
+        }
+      }
       const stubbedSend = sinon.stub()
       const res = { sendStatus: stubbedSend }
 
       await getVillainsBySlug(req, res)
 
-      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
+      expect(stubbedFindOne).to.have.been.calledWith({
+        where: {
+          slug: 'captain-hook'
+        },
+        attributes: ['name', 'movie', 'slug']
+      })
       expect(stubbedSend).to.have.been.calledWith(404)
     })
     it('returns a 500 error when the server fails', async () => {
@@ -65,9 +82,26 @@ describe('Controllers - Villains', () => {
 
       await getVillainsBySlug(req, res)
 
-      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
+      expect(stubbedFindOne).to.have.been.calledWith({
+        where: {
+          slug: 'captain-hook'
+        },
+        attributes: ['name', 'movie', 'slug']
+      })
       expect(stubbedStatus).to.have.been.calledWith(500)
       expect(stubbedSend).to.have.been.calledWith('HTTP Error 500 unable to handle this request')
+    })
+  })
+  describe('saveNewVillain', () => {
+    it('accepts new villain details and saves them as a new villain, returning the saved record with a 201 status', async () => {
+      const request = { body: singleVillain }
+      const stubbedCreate = sinon.stub(models.villains, 'create').returns(singleVillain)
+
+      await saveNewVillain(request, response)
+
+      expect(stubbedCreate).to.have.been.calledWith(singleVillain)
+      expect(stubbedStatus).to.have.been.calledWith(201)
+      expect(stubbedStatusSend).to.have.been.calledWith(singleVillain)
     })
   })
 })
