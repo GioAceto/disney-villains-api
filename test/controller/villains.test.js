@@ -56,5 +56,18 @@ describe('Controllers - Villains', () => {
       expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
       expect(stubbedSend).to.have.been.calledWith(404)
     })
+    it('returns a 500 error when the server fails', async () => {
+      stubbedFindOne.throws('ERROR')
+      const req = { params: { slug: 'captain-hook' } }
+      const stubbedSend = sinon.stub()
+      const stubbedStatus = sinon.stub().returns({ send: stubbedSend })
+      const res = { status: stubbedStatus }
+
+      await getVillainsBySlug(req, res)
+
+      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
+      expect(stubbedStatus).to.have.been.calledWith(500)
+      expect(stubbedSend).to.have.been.calledWith('HTTP Error 500 unable to handle this request')
+    })
   })
 })
