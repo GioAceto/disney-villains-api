@@ -91,19 +91,19 @@ describe('Controllers - Villains', () => {
       expect(stubbedStatus).to.have.been.calledWith(500)
       expect(stubbedSend).to.have.been.calledWith('HTTP Error 500 unable to handle this request')
     })
-    describe('addNewVillain', () => {
-      it('accepts new villain details and adds it in the DB, returning the added record with a 201 status', async () => {
-        const req = { body: postedVillain }
-        const stubbedSend = sinon.stub()
-        const stubbedStatus = sinon.stub().returns({ send: stubbedSend })
-        const res = { status: stubbedStatus }
-        const stubbedCreate = sinon.stub(models.villains, 'create').returns(singleVillain)
+  })
+  describe('addNewVillain', () => {
+    it('accepts new villain details and adds it in the DB, returning the added record with a 201 status', async () => {
+      const req = { body: postedVillain }
+      const stubbedSend = sinon.stub()
+      const stubbedStatus = sinon.stub().returns({ send: stubbedSend })
+      const res = { status: stubbedStatus }
+      const stubbedCreate = sinon.stub(models.villains, 'create').returns(singleVillain)
 
-        await addNewVillain(req, res)
-        expect(stubbedCreate).to.have.been.calledWith(postedVillain)
-        expect(stubbedStatus).to.have.been.calledWith(201)
-        expect(stubbedSend).to.have.been.calledWith(singleVillain)
-      })
+      await addNewVillain(req, res)
+      expect(stubbedCreate).to.have.been.calledWith(postedVillain)
+      expect(stubbedStatus).to.have.been.calledWith(201)
+      expect(stubbedSend).to.have.been.calledWith(singleVillain)
     })
   })
 })
