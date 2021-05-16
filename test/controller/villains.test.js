@@ -45,5 +45,16 @@ describe('Controllers - Villains', () => {
       expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
       expect(stubbedSend).to.have.been.calledWith(singleVillain)
     })
+    it('returns a 404 status when no matching id is found', async () => {
+      stubbedFindOne.returns(null)
+      const req = { params: { where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] } }
+      const stubbedSend = sinon.stub()
+      const res = { sendStatus: stubbedSend }
+
+      await getVillainsBySlug(req, res)
+
+      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
+      expect(stubbedSend).to.have.been.calledWith(404)
+    })
   })
 })
