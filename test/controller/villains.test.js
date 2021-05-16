@@ -36,19 +36,13 @@ describe('Controllers - Villains', () => {
   describe('Get Villains by Slug', () => {
     it('get a single villain from the DB with the provided ID', async () => {
       stubbedFindOne.returns(singleVillain)
-      const req = { params: { name: 'Captain Hook', movie: 'Peter Pan', slug: 'captain-hook' } }
+      const req = { params: { slug: 'captain-hook' } }
       const stubbedSend = sinon.stub()
       const res = { send: stubbedSend }
 
       await getVillainsBySlug(req, res)
 
-      expect(stubbedFindOne).to.have.been.calledWith({
-        where: {
-          name: 'Captain Hook',
-          movie: 'Peter Pan',
-          slug: 'captain-hook'
-        }
-      })
+      expect(stubbedFindOne).to.have.been.calledWith({ where: { slug: 'captain-hook' }, attributes: ['name', 'movie', 'slug'] })
       expect(stubbedSend).to.have.been.calledWith(singleVillain)
     })
   })
