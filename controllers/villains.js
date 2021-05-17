@@ -20,15 +20,19 @@ const getVillainsBySlug = async (req, res) => {
 }
 
 const addNewVillain = async (req, res) => {
-  const { name, movie, slug } = req.body
+  try {
+    const { name, movie, slug } = req.body
 
-  if (!name || !movie || !slug) {
-    return res.send('All fields are required')
+    if (!name || !movie || !slug) {
+      return res.send('All fields are required')
+    }
+
+    const newVillain = await models.villains.create({ name, movie, slug })
+
+    return res.status(201).send(newVillain)
+  } catch (error) {
+    return res.status(500).send('HTTP Error 500 unable to handle this request')
   }
-
-  const newVillain = await models.villains.create({ name, movie, slug })
-
-  return res.status(201).send(newVillain)
 }
 
 module.exports = { getAllVillains, getVillainsBySlug, addNewVillain }

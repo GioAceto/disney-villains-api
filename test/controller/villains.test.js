@@ -1,7 +1,7 @@
 const chai = require('chai')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
-const { describe, it } = require('mocha')
+const { describe, it, before, afterEach } = require('mocha')
 const { getAllVillains, getVillainsBySlug, addNewVillain } = require('../../controllers/villains')
 const models = require('../../models')
 const { singleVillain, postedVillain, villainsList } = require('../mocks/villains')
@@ -104,6 +104,24 @@ describe('Controllers - Villains', () => {
       expect(stubbedCreate).to.have.been.calledWith(postedVillain)
       expect(stubbedStatus).to.have.been.calledWith(201)
       expect(stubbedSend).to.have.been.calledWith(singleVillain)
+    })
+    it('returns a 500 error when the server fails', async () => {
+      stubbedFindOne.throws('ERROR')
+      const req = { params: { slug: 'captain-hook' } }
+      const stubbedSend = sinon.stub()
+      const stubbedStatus = sinon.stub().returns({ send: stubbedSend })
+      const res = { status: stubbedStatus }
+
+      await getVillainsBySlug(req, res)
+
+      expect(stubbedFindOne).to.have.been.calledWith({
+        where: {
+          slug: 'captain-hook'
+        },
+        attributes: ['name', 'movie', 'slug']
+      })
+      expect(stubbedStatus).to.have.been.calledWith(500)
+      expect(stubbedSend).to.have.been.calledWith('HTTP Error 500 unable to handle this request')
     })
   })
 })
